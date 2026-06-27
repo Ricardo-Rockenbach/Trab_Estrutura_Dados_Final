@@ -1,0 +1,5 @@
+HOST = "ep-morning-union-ac7o6zot-pooler.sa-east-1.aws.neon.tech"
+DATABASE = "neondb"
+USER = "neondb_owner"
+PASSWORD = "npg_LDrwuk0Ao6qa"
+SSLMODE = "require"
