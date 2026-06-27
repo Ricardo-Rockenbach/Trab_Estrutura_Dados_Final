@@ -1,0 +1,65 @@
+{
+    "categorias": [
+        [
+            2,
+            "Tecnologia"
+        ],
+        [
+            3,
+            "Suspense"
+        ],
+        [
+            4,
+            "Ficção Científica"
+        ],
+        [
+            5,
+            "Biografia"
+        ],
+        [
+            6,
+            "Terror"
+        ],
+        [
+            1,
+            "Romantico"
+        ]
+    ],
+    "livros": [
+        [
+            1,
+            "Dom Casmurro",
+            "Machado de Assis",
+            1899,
+            1
+        ],
+        [
+            2,
+            "O Iluminado",
+            "Stephen King",
+            1977,
+            3
+        ],
+        [
+            3,
+            "1984",
+            "George Orwell",
+            1949,
+            4
+        ],
+        [
+            4,
+            "Steve Jobs",
+            "Walter Isaacson",
+            2011,
+            5
+        ],
+        [
+            5,
+            "O Menino do Pijama Listrado",
+            "Rodrigo",
+            2001,
+            1
+        ]
+    ]
+}
