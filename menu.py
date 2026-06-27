@@ -36,7 +36,8 @@ def menu():
             break  # Aqui você pode adicionar a lógica para abrir a página web
         elif opcao == "5":
             console.print("Exibindo gráficos...", style="italic magenta")
-            grf.grafico_livros_categoria()
+            #grf.grafico_livros_categoria()
+            grf.dashboard_livros_categoria()
             input("Pressione Enter para continuar...")
         elif opcao == "6":
             console.print("Realizando backup da base de dados...", style="italic magenta")
