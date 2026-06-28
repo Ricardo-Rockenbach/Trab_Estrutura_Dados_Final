@@ -1,8 +1,9 @@
-from util import limpar_tela
+import interface as ui
 from crud import categorias as cat
 from crud import livros as liv
 from services import backup as bkp
 from services import graficos as grf
+from services.html import gerar_pagina
 
 from rich.prompt import Prompt
 from rich.console import Console
@@ -14,7 +15,8 @@ console = Console()
 # menu principal
 def menu():
     while True:
-        limpar_tela()
+        ui.limpar()
+        ui.titulo("Sistema Biblioteca")
         console.print("Menu Principal:", style="bold blue")
         console.print("1. Categorias", style="bold green")
         console.print("2. Livros", style="bold green")
@@ -32,19 +34,24 @@ def menu():
         elif opcao == "3":
             menu_pesquisa()
         elif opcao == "4":
-            console.print("Acessando página web...", style="italic magenta")
-            break  # Aqui você pode adicionar a lógica para abrir a página web
+            ui.sucesso(" Acessando página web...")
+            time.sleep(1)
+            gerar_pagina()
+            input("Pressione Enter para continuar...")
         elif opcao == "5":
-            console.print("Exibindo gráficos...", style="italic magenta")
-            #grf.grafico_livros_categoria()
-            grf.dashboard_livros_categoria()
+            ui.sucesso(" Exibindo gráficos...")
+            grf.exibir_dashboard()
             input("Pressione Enter para continuar...")
         elif opcao == "6":
             console.print("Realizando backup da base de dados...", style="italic magenta")
             bkp.backup_json()
+            time.sleep(2) 
+            ui.sucesso(" Backup realizado com sucesso!")
             input("Pressione Enter para continuar...")
         elif opcao == "7":
-            console.print("Saindo...", style="bold red")
+            #console.print("Saindo...", style="bold red")
+            ui.aviso(" Saindo do sistema...")
+            time.sleep(1)
             exit()  
         else:
             console.print("Opção inválida!", style="bold red")
@@ -53,34 +60,33 @@ def menu():
 def menu_categorias():
 
     while True:
-        limpar_tela()
+        ui.limpar()
+        ui.titulo("Sistema Biblioteca")
         console.print("Menu Categorias:", style="bold blue")
         console.print("1. Cadastrar categoria", style="bold green")
         console.print("2. Listar categorias", style="bold green")
         console.print("3. Alterar categoria", style="bold green")
         console.print("4. Excluir categoria", style="bold green")
-        console.print("5. Reordenar Categorias", style="bold red")
-        console.print("6. Voltar", style="bold green")
+        console.print("5. Voltar", style="bold green")
 
-        opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5", "6"])
+        opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5"])
 
         if opcao == "1":
             cat.cadastrar()
+            ui.sucesso(" Categoria cadastrada com sucesso.")
+            input("Pressione Enter para continuar...")
         elif opcao == "2":
             cat.listar()
-            if input("Pressione Enter para continuar..."):
-                pass
+            input("Pressione Enter para continuar...")
         elif opcao == "3":
             cat.alterar()
+            ui.sucesso(" Categoria alterada com sucesso.")
+            input("Pressione Enter para continuar...")
         elif opcao == "4":
             cat.excluir()
+            ui.sucesso(" Categoria excluída com sucesso.")
             input("Pressione Enter para continuar...")
-            pass
         elif opcao == "5":
-            console.print("Reordenando categorias...", style="bold red")
-            cat.reorder()
-            time.sleep(2)  # Pausa para mostrar a mensagem antes de limpar a tela
-        elif opcao == "6":
             break
         else:
             console.print("Opção inválida!", style="bold red")
@@ -88,31 +94,35 @@ def menu_categorias():
 # submenu de livros
 def menu_livros():
     while True:
-        limpar_tela()
+        ui.limpar()
+        ui.titulo("Sistema Biblioteca")
         console.print("Menu Livros:", style="bold blue")
         console.print("1. Cadastrar livro", style="bold green")
         console.print("2. Listar livros", style="bold green")
         console.print("3. Alterar livro", style="bold green")
         console.print("4. Excluir livro", style="bold green")
-        console.print("5. Reordenar livros", style="bold red")
-        console.print("6. Voltar", style="bold green")
+        console.print("5. Voltar", style="bold green")
 
-        opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5", "6"])
+        opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5"])
 
         if opcao == "1":
+            console.print("Cadastrar livro", style="bold blue")
             liv.cadastrar()
         elif opcao == "2":
+            console.print("Listar livros", style="bold blue")
             liv.listar()
             input("Pressione Enter para continuar...")
         elif opcao == "3":
+            console.print("Alterar livro", style="bold blue")
             liv.alterar()
+            ui.sucesso(" Livro alterado com sucesso.")
+            input("Pressione Enter para continuar...")
         elif opcao == "4":
+            console.print("Excluir livro", style="bold blue")
             liv.excluir()
+            ui.sucesso(" Livro excluído com sucesso.")
+            input("Pressione Enter para continuar...")
         elif opcao == "5":
-            console.print("Reordenando livros...", style="bold red")
-            liv.reorder()
-            time.sleep(2)  # Pausa para mostrar a mensagem antes de limpar a tela
-        elif opcao == "6":
             break
         else:
             console.print("Opção inválida!", style="bold red")
@@ -122,7 +132,8 @@ def menu_livros():
 # submenu de pesquisa
 def menu_pesquisa():
     while True:
-        limpar_tela()
+        ui.limpar()
+        ui.titulo("Sistema Biblioteca")
         console.print("Menu Pesquisa:", style="bold blue")
         console.print("1. Pesquisar livro por título", style="bold green")
         console.print("2. Pesquisar livro por autor", style="bold green")
@@ -147,4 +158,4 @@ def menu_pesquisa():
         elif opcao == "5":
             break
         else:
-            console.print("Opção inválida!", style="bold red")
+            ui.erro("Opção inválida!")

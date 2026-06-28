@@ -1,5 +1,6 @@
 from database import conexao
 from rich.console import Console
+import interface as ui
 
 console = Console()
 
@@ -26,7 +27,7 @@ def alterar():
     nome = input("Digite o novo nome da categoria: ")
     
     if id_categoria == "":
-        console.print("ID inválido. Operação cancelada.", style="bold red")
+        ui.erro(" ID inválido. Operação cancelada.")
         return
     if nome == "":
         sql = "SELECT nome FROM categoria WHERE id = %s"
@@ -36,6 +37,7 @@ def alterar():
     sql_update = "UPDATE categoria SET nome = %s WHERE id = %s"
     cursor.execute(sql_update, (nome, id_categoria))
     conexao.commit()
+    ui.sucesso(" Categoria alterada com sucesso.")
 
 def excluir():
     console.print("Excluir categoria", style="bold blue")
@@ -48,29 +50,17 @@ def excluir():
     sql = "DELETE FROM categoria WHERE id = %s"
 
     if id_categoria == "":
-        console.print("ID inválido. Operação cancelada.", style="bold red")
+        ui.erro(" ID inválido. Operação cancelada.")
         return
     
     if quantidade_livros > 0:
-        console.print("Não é possível excluir uma categoria que possui livros associados.", style="bold red")
-        console.print(f"Existem {quantidade_livros} livro (s) associados a esta categoria.", style="bold red")
+        ui.erro("Não é possível excluir uma categoria que possui livros associados.")
+        ui.aviso(f" Existem {quantidade_livros} livro (s) associados a esta categoria.")
         return
 
     cursor.execute(sql, (id_categoria,))
     conexao.commit()
-
-
-def reorder():
-    sql = "SELECT * FROM categoria ORDER BY id"
-    cursor.execute(sql)
-    categorias = cursor.fetchall()
-
-    for index, categoria in enumerate(categorias, start=1):
-        sql_update = "UPDATE categoria SET id = %s WHERE id = %s"
-        cursor.execute(sql_update, (index, categoria[0]))
-    
-    conexao.commit()
-
+    ui.sucesso(" Categoria excluída com sucesso.")
 
 # Função para pesquisar categorias por nome:
 def pesquisar_categoria_por_nome():
@@ -84,4 +74,4 @@ def pesquisar_categoria_por_nome():
         for categoria in resultados:
             console.print(f"ID: {categoria[0]}, Nome da Categoria: {categoria[1]}", style="green")
     else:
-        console.print("Nenhuma categoria encontrada com esse nome.", style="bold red")
+        ui.erro(" Nenhuma categoria encontrada com esse nome.")

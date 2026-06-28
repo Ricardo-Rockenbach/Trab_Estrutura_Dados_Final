@@ -1,120 +1,12 @@
 import os
 import plotly.express as px
 from database import conexao
+import webbrowser
 
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
 cursor, conexao = conexao()
-
-def grafico_livros_categoria():
-
-    os.makedirs("graficos", exist_ok=True)
-
-    sql = """
-    SELECT
-        c.nome,
-        COUNT(l.id) AS quantidade
-    FROM categoria c
-    LEFT JOIN livros l
-        ON l.categoriaid = c.id
-    GROUP BY c.nome
-    ORDER BY c.nome;
-    """
-
-    cursor.execute(sql)
-    dados = cursor.fetchall()
-
-    categorias = []
-    quantidades = []
-
-    # Separa os dados em duas listas
-    for categoria, quantidade in dados:
-        categorias.append(categoria)
-        quantidades.append(quantidade)
-
-    fig = px.bar(
-        x=categorias,
-        y=quantidades,
-        title="Quantidade de livros por categoria",
-        labels={
-            "x": "",
-            "y": "Quantidade"
-        },
-        width=1200,
-        height=600
-    )
-
-    fig.update_layout(
-
-        template="plotly_white",
-
-        title={
-            "text": "Quantidade de Livros por Categoria",
-            "x": 0.5,
-            "xanchor": "center",
-            "font": {
-                "size": 22
-            }
-        },
-
-        width=1200,
-        height=600,
-
-        margin=dict(
-            l=60,
-            r=40,
-            t=70,
-            b=60
-        ),
-
-        font=dict(
-            family="Segoe UI",
-            size=14,
-            color="#333333"
-        ),
-
-        plot_bgcolor="white",
-        paper_bgcolor="white",
-
-        bargap=0.35,
-
-        showlegend=False,
-
-        xaxis=dict(
-            title="Categoria",
-            showgrid=False,
-            zeroline=False
-        ),
-
-        yaxis=dict(
-            title="Quantidade de livros",
-            gridcolor="#EAEAEA",
-            zeroline=False
-        )
-    )
-
-    fig.update_traces(
-
-        marker=dict(
-            color="#4F81BD",
-            line=dict(
-                color="#3A5F8A",
-                width=1
-            )
-        ),
-
-        text=quantidades,
-        textposition="outside",
-
-        hovertemplate="<b>%{x}</b><br>Livros: %{y}<extra></extra>"
-    )
-
-    fig.update_layout(barcornerradius=8)
-
-    fig.write_html("graficos/livros_categoria.html")
-    fig.show()
-
 
 def dashboard_livros_categoria():
     os.makedirs("graficos", exist_ok=True)
@@ -174,4 +66,9 @@ def dashboard_livros_categoria():
     )
 
     fig.write_html("graficos/dashboard_livros_categoria.html")
-    fig.show()
+
+    return fig
+
+def exibir_dashboard():
+    fig = dashboard_livros_categoria()  # Gera o dashboard atualizado
+    fig.show()  # Exibe o dashboard em uma janela do navegador

@@ -23,5 +23,3 @@ def backup_json():
 
     with open(f"backup/backup_{data_hora_atual}.json", "w", encoding="utf-8") as arquivo:
         json.dump(backup, arquivo, indent=4, ensure_ascii=False)
-
-    print("Backup criado com sucesso!")
