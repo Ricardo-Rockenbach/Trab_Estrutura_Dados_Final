@@ -37,24 +37,24 @@ def menu():
             ui.sucesso(" Acessando página web...")
             time.sleep(1)
             gerar_pagina()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "5":
             ui.sucesso(" Exibindo gráficos...")
             grf.exibir_dashboard()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "6":
             console.print("Realizando backup da base de dados...", style="italic magenta")
             bkp.backup_json()
             time.sleep(2) 
             ui.sucesso(" Backup realizado com sucesso!")
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "7":
             #console.print("Saindo...", style="bold red")
             ui.aviso(" Saindo do sistema...")
             time.sleep(1)
             exit()  
         else:
-            console.print("Opção inválida!", style="bold red")
+            ui.erro(" Opção inválida!")
 
 # submenu de categorias
 def menu_categorias():
@@ -67,29 +67,29 @@ def menu_categorias():
         console.print("2. Listar categorias", style="bold green")
         console.print("3. Alterar categoria", style="bold green")
         console.print("4. Excluir categoria", style="bold green")
-        console.print("5. Voltar", style="bold green")
+        console.print("5. Voltar", style="red")
 
         opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5"])
 
         if opcao == "1":
             cat.cadastrar()
             ui.sucesso(" Categoria cadastrada com sucesso.")
-            input("Pressione Enter para continuar...")
+            ui.pausa()       
         elif opcao == "2":
             cat.listar()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "3":
             cat.alterar()
             ui.sucesso(" Categoria alterada com sucesso.")
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "4":
             cat.excluir()
             ui.sucesso(" Categoria excluída com sucesso.")
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "5":
             break
         else:
-            console.print("Opção inválida!", style="bold red")
+            ui.erro(" Opção inválida!")
 
 # submenu de livros
 def menu_livros():
@@ -101,7 +101,7 @@ def menu_livros():
         console.print("2. Listar livros", style="bold green")
         console.print("3. Alterar livro", style="bold green")
         console.print("4. Excluir livro", style="bold green")
-        console.print("5. Voltar", style="bold green")
+        console.print("5. Voltar", style="red")
 
         opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5"])
 
@@ -111,21 +111,21 @@ def menu_livros():
         elif opcao == "2":
             console.print("Listar livros", style="bold blue")
             liv.listar()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "3":
             console.print("Alterar livro", style="bold blue")
             liv.alterar()
             ui.sucesso(" Livro alterado com sucesso.")
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "4":
             console.print("Excluir livro", style="bold blue")
             liv.excluir()
             ui.sucesso(" Livro excluído com sucesso.")
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "5":
             break
         else:
-            console.print("Opção inválida!", style="bold red")
+            ui.erro(" Opção inválida!")
 
 
 
@@ -139,23 +139,27 @@ def menu_pesquisa():
         console.print("2. Pesquisar livro por autor", style="bold green")
         console.print("3. Pesquisar livro por categoria", style="bold green")
         console.print("4. Pesquisar categoria por nome", style="bold green")
-        console.print("5. Voltar", style="bold green")
+        console.print("5. Pesquisa avançada", style="bold blue")
+        console.print("6. Voltar", style="red")
 
-        opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5"])
+        opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5", "6"])
 
         if opcao == "1":
             liv.pesquisar_livro_por_titulo()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "2":
             liv.pesquisar_livro_por_autor()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "3":
             liv.pesquisar_livro_por_categoria()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "4":
             cat.pesquisar_categoria_por_nome()
-            input("Pressione Enter para continuar...")
+            ui.pausa()
         elif opcao == "5":
+            liv.pesquisa_avancada()
+            ui.pausa()
+        elif opcao == "6":
             break
         else:
-            ui.erro("Opção inválida!")
+            ui.erro(" Opção inválida!")

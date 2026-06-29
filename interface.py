@@ -19,3 +19,6 @@ def erro(msg):
 
 def aviso(msg):
     print(Fore.YELLOW + "⚠ " + msg)
+
+def pausa():
+    input("Pressione Enter para continuar...")

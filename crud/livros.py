@@ -22,7 +22,7 @@ def cadastrar():
     if cursor.fetchone() is None:
         ui.erro(" ID de categoria inválido.")
         ui.aviso(" Operação de cadastro cancelada.")
-        input("Pressione Enter para continuar...")
+        ui.pausa()
         return
     
     categoriaId = categoria_id if categoria_id else None  # Permite que categoriaId seja nulo
@@ -162,3 +162,40 @@ def pesquisar_livro_por_categoria():
     
     except Exception as e:
         ui.erro(f" Erro ao pesquisar livros pela categoria. Verifique o ID da categoria e tente novamente.\nDetalhes do erro: {e}")
+
+
+def pesquisa_avancada():
+    console.print("Pesquisa Avançada de Livros", style="bold blue")
+    console.print("Deixe o campo em branco se não quiser filtrar por esse critério.", style="green")
+
+    titulo = input("Digite o título do livro (Enter para pular): ")
+    autor = input("Digite o autor do livro (Enter para pular): ")
+    ano = input("Digite o ano de publicação do livro (Enter para pular): ")
+    cat.listar()  # Exibe a lista de categorias
+    categoria_id = input("Digite o ID da categoria (Enter para pular): ")
+
+    sql = "SELECT * FROM livros WHERE 1=1"
+    params = []
+
+    if titulo:
+        sql += " AND titulo ILIKE %s"
+        params.append(f"%{titulo}%")
+    if autor:
+        sql += " AND autor ILIKE %s"
+        params.append(f"%{autor}%")
+    if ano:
+        sql += " AND ano = %s"
+        params.append(ano)
+    if categoria_id:
+        sql += " AND categoriaId = %s"
+        params.append(categoria_id)
+
+    cursor.execute(sql, tuple(params))
+    resultados = cursor.fetchall()
+
+    if resultados:
+        ui.sucesso(" Resultados da pesquisa avançada:")
+        for livro in resultados:
+            console.print(f"ID: {livro[0]}, Título: {livro[1]}, Autor: {livro[2]}, Ano: {livro[3]}, Categoria ID: {livro[4]}", style="green")
+    else:
+        ui.erro(" Nenhum livro encontrado com os critérios fornecidos.")
