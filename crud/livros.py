@@ -84,6 +84,8 @@ def alterar():
     cursor.execute(sql_update, (titulo, autor, ano, id_livro))
     conexao.commit()
 
+    ui.sucesso(" Livro alterado com sucesso.")
+
 
 def excluir():
 

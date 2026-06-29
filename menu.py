@@ -62,11 +62,11 @@ def menu_categorias():
     while True:
         ui.limpar()
         ui.titulo("Sistema Biblioteca")
-        console.print("Menu Categorias:", style="bold blue")
-        console.print("1. Cadastrar categoria", style="bold green")
-        console.print("2. Listar categorias", style="bold green")
-        console.print("3. Alterar categoria", style="bold green")
-        console.print("4. Excluir categoria", style="bold green")
+        console.print("Menu Categorias:", style="")
+        console.print("1. Cadastrar categoria", style="#4a77da")
+        console.print("2. Listar categorias", style="#4a77da")
+        console.print("3. Alterar categoria", style="#4a77da")
+        console.print("4. Excluir categoria", style="#4a77da")
         console.print("5. Voltar", style="red")
 
         opcao = Prompt.ask("Escolha uma opção", choices=["1", "2", "3", "4", "5"])
@@ -80,11 +80,9 @@ def menu_categorias():
             ui.pausa()
         elif opcao == "3":
             cat.alterar()
-            ui.sucesso(" Categoria alterada com sucesso.")
             ui.pausa()
         elif opcao == "4":
             cat.excluir()
-            ui.sucesso(" Categoria excluída com sucesso.")
             ui.pausa()
         elif opcao == "5":
             break
@@ -115,12 +113,10 @@ def menu_livros():
         elif opcao == "3":
             console.print("Alterar livro", style="bold blue")
             liv.alterar()
-            ui.sucesso(" Livro alterado com sucesso.")
             ui.pausa()
         elif opcao == "4":
             console.print("Excluir livro", style="bold blue")
             liv.excluir()
-            ui.sucesso(" Livro excluído com sucesso.")
             ui.pausa()
         elif opcao == "5":
             break

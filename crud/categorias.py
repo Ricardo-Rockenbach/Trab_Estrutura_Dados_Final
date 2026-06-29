@@ -17,7 +17,7 @@ def listar():
     cursor.execute(sql)
 
     for categoria in cursor.fetchall():
-        console.print(f"ID: {categoria[0]}, Nome da Categoria: {categoria[1]}", style="green")
+        console.print(f"ID: {categoria[0]}, Nome da Categoria: {categoria[1]}", style="#4a77da")
 
 def alterar():
     console.print("Alterar categoria", style="bold blue")
@@ -37,6 +37,7 @@ def alterar():
     sql_update = "UPDATE categoria SET nome = %s WHERE id = %s"
     cursor.execute(sql_update, (nome, id_categoria))
     conexao.commit()
+
     ui.sucesso(" Categoria alterada com sucesso.")
 
 def excluir():
@@ -44,22 +45,25 @@ def excluir():
     listar()
 
     id_categoria = input("Digite o ID da categoria que deseja excluir: ")
-    quantidade_livros_sql = "SELECT COUNT(*) FROM livros WHERE categoriaId = %s"
-    cursor.execute(quantidade_livros_sql, (id_categoria,))
-    quantidade_livros = cursor.fetchone()[0]
-    sql = "DELETE FROM categoria WHERE id = %s"
-
+    
     if id_categoria == "":
         ui.erro(" ID inválido. Operação cancelada.")
         return
+    
+    quantidade_livros_sql = "SELECT COUNT(*) FROM livros WHERE categoriaId = %s"
+    cursor.execute(quantidade_livros_sql, (id_categoria,))
+    quantidade_livros = cursor.fetchone()[0]
+
     
     if quantidade_livros > 0:
         ui.erro("Não é possível excluir uma categoria que possui livros associados.")
         ui.aviso(f" Existem {quantidade_livros} livro (s) associados a esta categoria.")
         return
 
+    sql = "DELETE FROM categoria WHERE id = %s"
     cursor.execute(sql, (id_categoria,))
     conexao.commit()
+
     ui.sucesso(" Categoria excluída com sucesso.")
 
 # Função para pesquisar categorias por nome:
